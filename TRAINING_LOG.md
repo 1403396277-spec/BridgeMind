@@ -32,3 +32,10 @@
 - [ ] 迁移至 Kaggle T4 GPU 进行 50 epoch 完整训练
 - [ ] 探索 yolo11s/yolo11m 更大模型对比
 - [ ] 引入数据增强（mosaic, mixup）提升 recall
+
+feat: implement RAG module for bridge specification Q&A
+
+- LlamaIndex + BGE-small-zh embedding (local, free)
+- DeepSeek-V3 API as LLM backbone
+- Tested 3 queries, system correctly refuses to hallucinate when knowledge unavailable
+- 13K char knowledge base, 42 chunks, retrieval similarity 0.59-0.71
