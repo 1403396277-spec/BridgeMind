@@ -45,3 +45,29 @@ config_secret.py
 
 # RAG 索引文件（每次 build 会重新生成，不需要传）
 rag/index_storage/
+
+# 大文件 - 模型权重
+*.pt
+*.pth
+*.onnx
+crack_yolov11s_best.pt
+
+# 大文件 - 视频
+*.mp4
+*.mov
+*.avi
+demo.*
+
+# Pipeline 临时输出
+pipeline_outputs/
+_tmp_*
+
+# RAG 索引
+rag/index_storage/
+
+# 系统/IDE
+.DS_Store
+.idea/
+
+*.iml
+__pycache__/
