@@ -42,3 +42,6 @@ Thumbs.db
 .env
 *.key
 config_secret.py
+
+# RAG 索引文件（每次 build 会重新生成，不需要传）
+rag/index_storage/
