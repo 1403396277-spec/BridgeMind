@@ -13,7 +13,7 @@
 
 ## 🎬 演示视频
 
-👉 [**点击观看 60s 完整演示（Bilibili）**]https://www.bilibili.com/video/BV19JL46ME1r?buvid=Y24DDC2DEAB7660A49E487B864D320FCF401&from_spmid=main.space.0.0&is_story_h5=false&mid=B7f8bw42ijhTdBMAcN30kA%3D%3D&plat_id=114&share_from=ugc&share_medium=iphone&share_plat=ios&share_session_id=25E916B0-2454-4A94-8F79-569155B45A5F&share_source=WEIXIN&share_tag=s_i&timestamp=1779347673&unique_k=Cygqqv8&up_id=631276395
+👉 [**点击观看 60s 完整演示（Bilibili）**]https://www.bilibili.com/video/BV19JL46ME1r
 
 > 演示流程：上传桥梁照片 → YOLO 检测裂缝 → 自动提取几何特征 → RAG 检索规范 → DeepSeek 生成 5 章节诊断报告
 
