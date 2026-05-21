@@ -33,9 +33,35 @@
 - [ ] 探索 yolo11s/yolo11m 更大模型对比
 - [ ] 引入数据增强（mosaic, mixup）提升 recall
 
-feat: implement RAG module for bridge specification Q&A
+---
 
-- LlamaIndex + BGE-small-zh embedding (local, free)
-- DeepSeek-V3 API as LLM backbone
-- Tested 3 queries, system correctly refuses to hallucinate when knowledge unavailable
-- 13K char knowledge base, 42 chunks, retrieval similarity 0.59-0.71
+## Run #2 — Full Training on Kaggle (2026-XX-XX)
+
+**目标**: 完整训练，达到工程实用水平
+
+**配置**:
+- 模型: YOLO11s-seg (从 yolo11n-seg 升级)
+- 数据集: Crack Segmentation Dataset (11K+ 多源融合)
+- Epochs: 50
+- Batch size: 32
+- Image size: 448×448
+- 设备: Kaggle Tesla T4 GPU (15GB)
+- 优化器: AdamW + Cosine LR
+- 数据增强: Mosaic + Mixup + HSV
+- 训练时长: ~5 小时
+
+**结果**:
+
+| Metric | Run #1 (5ep, M1) | Run #2 (50ep, T4) | 提升 |
+|--------|-------------------|---------------------|------|
+| Box mAP@0.5 | 0.468 | **0.688** | +47% |
+| Box mAP@0.5:0.95 | 0.295 | **0.485** | +64% |
+| Mask mAP@0.5 | 0.359 | **0.561** | +56% |
+| Box Precision | 0.673 | **0.788** | +17% |
+| Box Recall | 0.43 | **0.596** | +39% |
+| 推理速度 | - | **3.1ms/img** | - |
+
+**结论**: 
+- 模型达到工程实用水平（mAP@0.5 ≈ 0.69 接近论文级）
+- 推理速度满足实时检测需求（>300 FPS）
+- best.pt 模型已保存，进入 pipeline 整合阶段
