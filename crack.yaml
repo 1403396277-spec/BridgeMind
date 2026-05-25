@@ -1,6 +1,12 @@
-path: /Users/dangchenghuize/Desktop/项目/crack_segmentation_dataset
+# YOLO 数据集配置
+# 注意: path 是相对于运行 yolo/train.py 命令的工作目录
+# 推荐做法: 在项目根目录执行训练，并将数据集放在 ./crack_segmentation_dataset 下
+# 如需使用绝对路径，可改为: path: /absolute/path/to/crack_segmentation_dataset
+
+path: ./crack_segmentation_dataset
 train: train/images
 val: test/images
 
+# 类别定义
 names:
   0: crack

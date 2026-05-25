@@ -13,7 +13,7 @@
 
 ## 🎬 演示视频
 
-👉 [**点击观看 60s 完整演示（Bilibili）**]https://www.bilibili.com/video/BV19JL46ME1r
+👉 [**点击观看 60s 完整演示（Bilibili）**](https://www.bilibili.com/video/BV19JL46ME1r)
 
 > 演示流程：上传桥梁照片 → YOLO 检测裂缝 → 自动提取几何特征 → RAG 检索规范 → DeepSeek 生成 5 章节诊断报告
 
@@ -97,18 +97,24 @@ DeepSeek 在生成报告时被严格要求：
 ## 🚀 快速开始
 
 \`\`\`bash
-# 1. 安装依赖
-pip install ultralytics llama-index llama-index-embeddings-huggingface \\
-            llama-index-llms-openai-like pymupdf python-dotenv \\
-            scikit-image gradio
+# 1. 克隆仓库
+git clone https://github.com/1403396277-spec/BridgeMind.git
+cd BridgeMind
 
-# 2. 配置 API Key (.env 文件)
-echo "DEEPSEEK_API_KEY=sk-your-key" > .env
+# 2. 安装依赖
+pip install -r requirements.txt
 
-# 3. 构建知识库（首次运行）
+# 3. 配置 API Key (复制模板并填入真实 key)
+cp .env.example .env
+# 编辑 .env, 填入 DEEPSEEK_API_KEY
+
+# 4. 数据预处理 (如需重新训练; 详见 TRAINING_LOG.md)
+python convert_masks.py --dataset-root ./crack_segmentation_dataset
+
+# 5. 构建 RAG 知识库 (首次运行)
 python rag/build_index.py
 
-# 4. 启动 Web 界面
+# 6. 启动 Web 界面
 python app.py
 \`\`\`
 
@@ -120,20 +126,38 @@ python app.py
 
 \`\`\`
 BridgeMind/
-├── app.py                 # Gradio Web 界面
-├── pipeline.py            # 端到端推理 pipeline
-├── train.py               # YOLO 训练脚本
-├── convert_masks.py       # 数据预处理（mask → YOLO 多边形）
+├── app.py                  # Gradio Web 界面
+├── pipeline.py             # 端到端推理 pipeline
+├── train.py                # YOLO 训练脚本 (支持 sanity / 完整训练)
+├── convert_masks.py        # 数据预处理 (mask → YOLO 多边形, 含 CLI)
+├── verify_labels.py        # 标注可视化验证工具
+├── crack.yaml              # YOLO 数据集配置
+├── requirements.txt        # Python 依赖列表
+├── .env.example            # 环境变量模板
 ├── rag/
-│   ├── build_index.py    # 构建 RAG 索引
-│   ├── query.py          # 基础问答
-│   └── diagnose.py       # 专业诊断报告生成器
-├── docs/                  # 桥梁知识库源文档
-├── reports/               # 3 个示例诊断报告
-├── assets/                # 演示截图
-├── TRAINING_LOG.md        # 训练日志
-└── crack_yolov11s_best.pt # YOLO 训练权重
+│   ├── build_index.py     # 构建 RAG 索引
+│   ├── query.py           # 基础问答
+│   └── diagnose.py        # 专业诊断报告生成器
+├── docs/                   # 桥梁知识库源文档
+├── reports/                # 3 个示例诊断报告
+├── assets/                 # 演示截图
+├── TRAINING_LOG.md         # 训练日志
+└── crack_yolov11s_best.pt  # YOLO 训练权重
 \`\`\`
+
+---
+
+## 🏋️ 重新训练模型
+
+\`\`\`bash
+# 本地快速 sanity check (M1 Mac / 低显存)
+python train.py --epochs 5 --batch 8 --model yolo11n-seg.pt --name sanity_check
+
+# 完整训练 (Kaggle T4 / 服务器 GPU)
+python train.py --epochs 50 --batch 32 --model yolo11s-seg.pt --name full_run
+\`\`\`
+
+完整两轮训练实验记录与对比，详见 [TRAINING_LOG.md](./TRAINING_LOG.md)。
 
 ---
 
